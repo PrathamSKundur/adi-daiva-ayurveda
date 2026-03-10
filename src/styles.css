@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --forest: #1B4332;
+  --sage: #D8E2DC;
+  --gold: #D4AF37;
+}
+
+@layer base {
+  html {
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+@layer utilities {
+  .heading {
+    font-family: 'Playfair Display', serif;
+  }
+  .font-body {
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  .bottom-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
