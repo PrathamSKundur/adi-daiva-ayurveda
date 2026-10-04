@@ -1,94 +1,132 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Leaf, Eye, Salad, Flame } from 'lucide-react'
+import { useRef, useState } from 'react';
+import ShaderImage from '../gl/ShaderImage';
+import { OIL_FRAG } from '../gl/shaders';
+import Picture from '../lib/Picture';
+import useReveal from '../lib/useReveal';
+import { whatsappWith, DISCLAIMER } from '../data/site';
+import { Label } from './ornaments';
 
-const therapies = [
+// oil pools in image uv (y up), radius in image-height units
+const SLIDES = [
   {
-    icon: Leaf,
-    title: 'Geriatric Care',
-    desc: 'Netra Basti & Rejuvenating Therapies for the Elderly.'
+    key: 'kati', name: 'Kati Basti', deva: 'कटि बस्ति', img: 'kati-basti', focus: [0.55, 0.42],
+    oilA: [0.566, 0.347], oilB: [0.566, 0.347], r: 0.065,
+    text: 'A ring of black-gram dough is sealed on the lower back and filled with warm medicated oil, held there and re-warmed as it cools. Traditionally used for stiffness and pain of the lower back.',
   },
   {
-    icon: Eye,
-    title: 'Digital Detox',
-    desc: 'Specialized De-stress Programs for Students & Professionals. Netra Tarpana & More.'
+    key: 'janu', name: 'Janu Basti', deva: 'जानु बस्ति', img: 'janu-basti', focus: [0.5, 0.55],
+    oilA: [0.462, 0.336], oilB: [0.554, 0.284], r: 0.065,
+    text: 'Warm medicated oil pooled over each knee inside a dough reservoir. Traditionally used for knee pain, stiffness and ease of movement.',
   },
-  {
-    icon: Salad,
-    title: 'Personalized Diet Chart',
-    desc: 'Custom Ayurvedic diet plans aligned with your Prakriti for lasting health.'
-  },
-  {
-    icon: Flame,
-    title: 'Yoga Sessions',
-    desc: 'Clinical Yoga sessions tailored to your health condition and lifestyle.'
-  }
-]
+  { key: 'shiro', name: 'Shirodhara', deva: 'शिरोधारा', text: 'A slow, steady stream of warm oil poured across the forehead. Traditionally used for stress, sleeplessness and headaches.' },
+  { key: 'abhy', name: 'Abhyanga', deva: 'अभ्यङ्ग', text: 'A full-body massage with warm herbal oil, chosen for your constitution. Nourishes the tissues and calms Vata.' },
+  { key: 'nasya', name: 'Nasya', deva: 'नस्य', text: 'Medicated drops through the nose, the classical route for conditions of the head, sinuses and senses.' },
+  { key: 'vire', name: 'Virechana', deva: 'विरेचन', text: 'Therapeutic purgation under supervision, one of the five classical cleansings, used for conditions of Pitta.' },
+];
 
-export default function Panchakarma(){
+const N = SLIDES.length;
+const wrap = (d) => ((d % N) + N + Math.floor(N / 2)) % N - Math.floor(N / 2);
+
+export default function Panchakarma() {
+  const ref = useRef(null);
+  const drag = useRef(null);
+  const [i, setI] = useState(0);
+  useReveal(ref);
+  const go = (d) => setI((v) => (v + d + N) % N);
+  const s = SLIDES[i];
+
+  const down = (e) => { drag.current = { x: e.clientX, moved: false }; };
+  const move = (e) => {
+    if (!drag.current) return;
+    const dx = e.clientX - drag.current.x;
+    if (Math.abs(dx) > 45) { go(dx < 0 ? 1 : -1); drag.current = { x: e.clientX, moved: true }; }
+  };
+  const up = () => { drag.current = null; };
+
   return (
-    <section>
-      {/* Section header — styled as a card, not a plain divider label */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6 }}
-        className="rounded-2xl overflow-hidden mb-5 shadow-sm"
-        style={{ background: '#1B4332' }}
-      >
-        <div className="h-1.5" style={{ background: 'linear-gradient(90deg, #D4AF37 0%, rgba(216,226,220,0.3) 100%)' }} />
-        <div className="px-6 py-5 sm:px-8 sm:py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] mb-1" style={{ color: '#D4AF37' }}>
-              Traditional Healing
-            </p>
-            <h2 className="heading text-2xl sm:text-3xl font-bold text-white">
-              Authentic Kerala Panchakarma
-            </h2>
-          </div>
-          <span
-            className="self-start sm:self-center text-xs px-3 py-1.5 rounded-full font-medium whitespace-nowrap"
-            style={{ background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.4)', color: '#D4AF37' }}
-          >
-            Certified Therapists
-          </span>
-        </div>
-      </motion.div>
+    <section id="panchakarma" ref={ref} className="pk" aria-labelledby="pk-title">
+      <div className="section-head" data-reveal>
+        <Label>Panchakarma therapies</Label>
+        <h2 id="pk-title">Warm oil, held <em>patiently</em>.</h2>
+        <p>Hover over the oil, or touch it. This is the slow warmth of a Basti, held over the place that hurts.</p>
+      </div>
 
-      {/* Therapy cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-        {therapies.map((t, i) => (
-          <motion.div
-            key={t.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.55, delay: i * 0.1 }}
-            className="rounded-xl overflow-hidden flex flex-col"
-            style={{ background: '#1B4332', color: '#FFFFFF' }}
-          >
-            <div className="h-1" style={{ background: 'linear-gradient(90deg, #D4AF37, transparent)' }} />
-            <div className="p-5 lg:p-6 flex flex-col gap-3 flex-1">
-              <span
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(216,226,220,0.12)', border: '1px solid rgba(216,226,220,0.2)' }}
-              >
-                <t.icon size={20} style={{ color: '#D8E2DC' }} />
-              </span>
-              <div>
-                <h3 className="heading text-base font-semibold leading-snug uppercase tracking-wide"
-                  style={{ color: '#D4AF37' }}>
-                  {t.title}
-                </h3>
-                <p className="text-sm mt-2 leading-relaxed" style={{ color: 'rgba(216,226,220,0.85)' }}>
-                  {t.desc}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+      <div
+        className="coverflow"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Panchakarma therapies"
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1); }}
+        onPointerDown={down}
+        onPointerMove={move}
+        onPointerUp={up}
+        onPointerCancel={up}
+        onPointerLeave={up}
+      >
+        {SLIDES.map((sl, n) => {
+          const d = wrap(n - i);
+          const front = d === 0;
+          return (
+            <article
+              key={sl.key}
+              className={`cf-slide ${sl.img ? 'cf-slide--photo' : 'cf-slide--card'} ${front ? 'is-front' : ''}`}
+              style={{
+                '--d': d,
+                '--ad': Math.abs(d),
+                zIndex: 10 - Math.abs(d),
+                opacity: Math.abs(d) > 2 ? 0 : 1,
+                pointerEvents: Math.abs(d) > 2 ? 'none' : undefined,
+              }}
+              aria-hidden={!front}
+              onClick={() => { if (!front && !drag.current?.moved) setI(n); }}
+            >
+              {sl.img ? (
+                front ? (
+                  <ShaderImage
+                    texture={`/img/${sl.img}.jpg`}
+                    fragment={OIL_FRAG}
+                    focus={sl.focus}
+                    uniforms={{ uOilA: sl.oilA, uOilB: sl.oilB, uOilR: sl.r }}
+                    mouseEase={0.14}
+                  >
+                    <Picture name={sl.img} alt={`${sl.name} being given by Dr. Rohit S. Patil`} sizes="(min-width: 900px) 46vw, 80vw" position={`${sl.focus[0] * 100}% ${(1 - sl.focus[1]) * 100}%`} />
+                  </ShaderImage>
+                ) : (
+                  <Picture name={sl.img} alt="" sizes="40vw" position={`${sl.focus[0] * 100}% ${(1 - sl.focus[1]) * 100}%`} />
+                )
+              ) : (
+                <div className="cf-card">
+                  <span className="cf-card__drop" aria-hidden="true" />
+                  <p className="cf-card__deva" lang="sa">{sl.deva}</p>
+                  <p className="cf-card__name">{sl.name}</p>
+                </div>
+              )}
+              {sl.img && <span className="cf-slide__tag">{sl.name}</span>}
+            </article>
+          );
+        })}
+      </div>
+
+      <div className="cf-controls">
+        <button onClick={() => go(-1)} aria-label="Previous therapy">←</button>
+        <div className="cf-dots" role="tablist" aria-label="Choose a therapy">
+          {SLIDES.map((sl, n) => (
+            <button key={sl.key} role="tab" aria-selected={n === i} aria-label={sl.name} onClick={() => setI(n)} />
+          ))}
+        </div>
+        <button onClick={() => go(1)} aria-label="Next therapy">→</button>
+      </div>
+
+      <div key={s.key} className="cf-caption" aria-live="polite">
+        <p className="cf-caption__deva" lang="sa">{s.deva}</p>
+        <h3>{s.name}</h3>
+        <p>{s.text}</p>
+        <a className="text-link" href={whatsappWith(`Hari Om, I would like to ask Dr. Rohit about ${s.name}.`)} target="_blank" rel="noopener noreferrer">
+          Ask Dr. Rohit about {s.name} →
+        </a>
+        <p className="fineprint">{DISCLAIMER}</p>
       </div>
     </section>
-  )
+  );
 }

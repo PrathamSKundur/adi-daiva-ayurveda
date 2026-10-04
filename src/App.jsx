@@ -1,39 +1,75 @@
-import React from 'react'
-import Hero from './components/Hero'
-import ServicesGrid from './components/ServicesGrid'
-import SwarnaSection from './components/SwarnaSection'
-import Panchakarma from './components/Panchakarma'
-import Complimentary from './components/Complimentary'
-import Footer from './components/Footer'
-import BottomBar from './components/BottomBar'
+import { useEffect } from 'react';
+import Lenis from 'lenis';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { finePointer, reducedMotion } from './lib/env';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Intro from './components/Intro';
+import Elements from './components/Elements';
+import Homa from './components/Homa';
+import Panchakarma from './components/Panchakarma';
+import Swarna from './components/Swarna';
+import Elders from './components/Elders';
+import YogaDiet from './components/YogaDiet';
+import Manuscript from './components/Manuscript';
+import Contact from './components/Contact';
+import FloatingCTA from './components/FloatingCTA';
 
-export default function App(){
+gsap.registerPlugin(ScrollTrigger);
+
+export default function App() {
+  // Prithvi: grounded, slightly heavy scrolling (Lenis) with a mouse/trackpad. Touch keeps native momentum.
+  useEffect(() => {
+    if (reducedMotion || !finePointer) return undefined;
+    const lenis = new Lenis({ lerp: 0.065, wheelMultiplier: 0.8 });
+    window.__lenis = lenis;
+    lenis.on('scroll', ScrollTrigger.update);
+    const tick = (t) => lenis.raf(t * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
+
+    const onClick = (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      const el = a && document.querySelector(a.getAttribute('href'));
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el, { duration: 1.8 });
+    };
+    document.addEventListener('click', onClick);
+    return () => {
+      gsap.ticker.remove(tick);
+      lenis.destroy();
+      document.removeEventListener('click', onClick);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white font-body" style={{ color: '#1B4332' }}>
-      {/* Top header bar */}
-      <header className="w-full py-3 px-6 lg:px-12 flex items-center justify-between border-b" style={{ borderColor: '#D8E2DC' }}>
-        <span className="heading text-xl lg:text-2xl font-bold" style={{ color: '#1B4332' }}>
-          Adi Daiva Ayurveda
-        </span>
-        <span className="text-xs lg:text-sm uppercase tracking-widest" style={{ color: '#1B4332', opacity: 0.65 }}>
-          Clinic · Mysuru
-        </span>
-      </header>
-
-      {/* Hero is full-width, no max-width cap */}
-      <div className="mt-6 px-4 lg:px-12">
+    <>
+      <svg className="svg-defs" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="goldInk" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="64" y2="64">
+            <stop offset="0" stopColor="#9A7440" />
+            <stop offset="0.5" stopColor="#C5A059" />
+            <stop offset="1" stopColor="#A9823F" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <a className="skip" href="#main">Skip to content</a>
+      <Header />
+      <main id="main">
         <Hero />
-      </div>
-
-      <main className="max-w-6xl mx-auto px-4 lg:px-12 pb-8 space-y-16 mt-14">
-        <ServicesGrid />
-        <SwarnaSection />
+        <Intro />
+        <Elements />
+        <Homa />
         <Panchakarma />
-        <Complimentary />
+        <Swarna />
+        <Elders />
+        <YogaDiet />
+        <Manuscript />
+        <Contact />
       </main>
-
-      <Footer />
-      <BottomBar />
-    </div>
-  )
+      <FloatingCTA />
+    </>
+  );
 }

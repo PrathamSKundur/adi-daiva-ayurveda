@@ -1,0 +1,46 @@
+{
+  "placeholders": {
+    "consultation": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAADwBACdASoYABIAPu1krE6ppaQiKA1RMB2JQBdmZofAAiHASXELGEd76HUzCUj5FaAA/HhJH12Dkt8XBUMatW5kbOpGSURujVmXIKzdWmTf5tpkRqpJJA1JlLOD8M7Ng3tIkM4imc8OgJ+ylsqspM8z0iIMfNqFzdqwAA==",
+    "dr-rohit-desk": "data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAADwBACdASoYACAAPu1srVEppaQiqAqpMB2JQBOgDAu2LLXP84TYEgemC0ejwXU62BAA/rYw8Tek4Dyhe0+v/l4ENL3E+O1MSIagC/yOPWSdS94Nkim68ro5/NlGVJh2iV47uDrT5tbLjBW3byqwADvQgnm1sk8BaFIkBj2Ylnb1psy0flWRj8uQKdRKfMEIOfzlgNUayDHWX6CqEAyfZS2hvmqDunu2IXRWKnAAAAA=",
+    "homa": "data:image/webp;base64,UklGRhQBAABXRUJQVlA4IAgBAABQCACdASoYACsAPu1wrFKppiOipWsxMB2JbACdMsvItIErf9p4BgcoAeR9XotIuwRJxxF0P9Kr/YDW3sLMpJgQzZp8NeiX15hM3OAA99irVqorzccZ80i3QnzbRNnHngp8pI+V6pdgV0VoHSgwa6jXAk825JjZKiJeAWqQfEcmJqyZ4W7bCbnO+4pYlxCdx08VtAANwKW/fs5pZfsilDgsWYY+ULLG5LZp/QPcV4W0wZxWDV5O5V5uH33z+A0L+soX+tcNrQUSY6xJN5PIYkhmxmsKnf98UeHgkZaI+lves6Jrf3NiXr8bdFjAZuPhOQY4M860KVCs/QsttnZUGE/jN0gZ+sgAAAA=",
+    "clinic-desk": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAADwBACdASoYAB0APu1gqk2ppSQiN/VYATAdiWUAxNgQ77qphCC+AWUS9/GmVi4MswAA/ow9RSVE2qEIzDvIIbax3J+l5+WYyEeut6b0MRO9cSQshD7XUOAcDhcbLioMOouvlYR1dz25QX/M/fkC7dDSF30/kE7ColPbQIABPm0/bKg8cgryaljDYdYAAA=="
+  },
+  "meta": {
+    "consultation": {
+      "w": 4000,
+      "h": 3000
+    },
+    "dr-rohit-desk": {
+      "w": 1500,
+      "h": 2000
+    },
+    "homa": {
+      "w": 720,
+      "h": 1294
+    },
+    "kati-basti": {
+      "w": 1890,
+      "h": 1745
+    },
+    "janu-basti": {
+      "w": 1395,
+      "h": 1850
+    },
+    "swarna-prashana": {
+      "w": 3024,
+      "h": 4032
+    },
+    "clinic-desk": {
+      "w": 1597,
+      "h": 1920
+    },
+    "dr-skanda": {
+      "w": 1122,
+      "h": 1402
+    },
+    "dr-rohit-portrait": {
+      "w": 1060,
+      "h": 1060
+    }
+  }
+}
