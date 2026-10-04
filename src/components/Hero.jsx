@@ -1,122 +1,106 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ShaderImage from '../gl/ShaderImage';
+import { DESK_FRAG } from '../gl/shaders';
+import { srcset, placeholder, dims } from '../lib/Picture';
+import { finePointer, reducedMotion } from '../lib/env';
+import { whatsappWith } from '../data/site';
+import { WhatsAppIcon } from './ornaments';
 
-export default function Hero(){
+const CREAM = [253 / 255, 251 / 255, 247 / 255];
+
+/**
+ * Phase 1 + 3.1 · OPD & Diagnosis hero.
+ * Layout follows the clinic flyer: the desk photograph washed into parchment,
+ * the emblem and name centred, the philosophy as the headline.
+ * The desk is a 2.5D depth scene (mouse on desktop, scroll on touch) and a
+ * frosted-glass card offers the free Prakriti assessment and Nadi Pareeksha.
+ */
+export default function Hero() {
+  const ref = useRef(null);
+  const scrollMouse = useRef(null);
+  const d = dims('clinic-desk');
+
+  useEffect(() => {
+    if (reducedMotion) return undefined;
+    const ctx = gsap.context(() => {
+      gsap.to('.hero__desk', { yPercent: 10, ease: 'none', scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: true } });
+      if (!finePointer) {
+        // no cursor on phones: scrolling moves the depth layers instead
+        scrollMouse.current = { x: 0.5, y: 0.5 };
+        ScrollTrigger.create({
+          trigger: ref.current, start: 'top top', end: 'bottom top',
+          onUpdate: ({ progress: p }) => { scrollMouse.current = { x: 0.5 + p * 0.3, y: 0.5 - p * 0.8 }; },
+        });
+      }
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section>
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="rounded-2xl overflow-hidden shadow-lg"
-        style={{ border: '1px solid #D8E2DC' }}
-      >
-        {/* ── Mobile: stacked image + tagline bar (unchanged) ── */}
-        {/* ── Desktop (lg+): side-by-side, image left 60% / info panel right 40% ── */}
-        <div className="flex flex-col lg:flex-row">
-
-          {/* Image */}
-          <div className="w-full lg:w-[60%] h-64 sm:h-80 lg:h-[500px] relative flex-shrink-0">
-            <img
-              src="/20260228_111659.jpg"
-              alt="Dr. Rohit S. Patil consulting a patient"
-              className="w-full h-full object-cover object-top"
-            />
-            {/* Gradient overlay — only on mobile (text is overlaid) */}
-            <div
-              className="absolute inset-0 lg:hidden"
-              style={{
-                background:
-                  'linear-gradient(to bottom, rgba(27,67,50,0) 38%, rgba(27,67,50,0.85) 100%)'
-              }}
-            />
-            {/* Mobile text overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-5 text-white lg:hidden">
-              <p className="text-xs uppercase tracking-widest mb-1 opacity-80">
-                Adi Daiva Ayurveda Clinic
-              </p>
-              <h1
-                className="heading text-2xl sm:text-3xl font-bold leading-snug"
-                style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
-              >
-                Dr. Rohit S. Patil
-              </h1>
-              <p className="text-sm mt-1 opacity-90">B.A.M.S., PGDYS</p>
-              <p className="text-xs mt-1 opacity-80">
-                Consultant Physician &amp; Clinical Yoga Specialist
-              </p>
-            </div>
-          </div>
-
-          {/* Desktop info panel */}
-          <div
-            className="hidden lg:flex flex-col justify-center px-10 py-10 flex-1"
-            style={{ background: '#1B4332' }}
-          >
-            <p className="text-xs uppercase tracking-[0.2em] mb-4" style={{ color: '#D8E2DC', opacity: 0.7 }}>
-              Adi Daiva Ayurveda Clinic · Mysuru
-            </p>
-            <h1
-              className="heading text-4xl xl:text-5xl font-bold text-white leading-tight"
-            >
-              Dr. Rohit<br />S. Patil
-            </h1>
-            <p
-              className="mt-3 text-base font-medium"
-              style={{ color: '#D8E2DC' }}
-            >
-              B.A.M.S., PGDYS
-            </p>
-            <p
-              className="mt-1 text-sm leading-relaxed"
-              style={{ color: '#D8E2DC', opacity: 0.85 }}
-            >
-              Consultant Physician &amp;<br />Clinical Yoga Specialist
-            </p>
-
-            {/* Divider */}
-            <div className="my-6 h-px w-12" style={{ background: '#D4AF37' }} />
-
-            <p className="text-sm leading-relaxed" style={{ color: '#D8E2DC', opacity: 0.8 }}>
-              Authentic Ayurveda · Holistic Healing<br />Compassionate Care
-            </p>
-
-            {/* CTA buttons */}
-            <div className="mt-8 flex gap-3">
-              <a
-                href="tel:9380736394"
-                className="px-5 py-2.5 rounded-lg text-sm font-semibold"
-                style={{ background: '#D8E2DC', color: '#1B4332' }}
-              >
-                Call Now
-              </a>
-              <a
-                href="https://wa.me/919380736394"
-                target="_blank"
-                rel="noreferrer"
-                className="px-5 py-2.5 rounded-lg text-sm font-semibold"
-                style={{
-                  background: 'transparent',
-                  color: '#D8E2DC',
-                  border: '1.5px solid rgba(216,226,220,0.45)'
-                }}
-              >
-                WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile tagline bar (unchanged) */}
-        <div
-          className="px-5 py-4 lg:hidden"
-          style={{ background: '#1B4332' }}
+    <section id="top" ref={ref} className="hero" aria-labelledby="hero-title">
+      <div className="hero__desk" style={{ backgroundImage: `url(${placeholder('clinic-desk')})` }}>
+        <ShaderImage
+          texture="/img/clinic-desk-1200.webp"
+          fragment={DESK_FRAG}
+          focus={[0.5, 0.48]}
+          uniforms={{ uCream: CREAM }}
+          pointerTarget={ref}
+          mouseRef={finePointer ? undefined : scrollMouse}
+          mouseEase={0.05}
         >
-          <p className="text-center text-sm text-white tracking-wide">
-            Authentic Ayurveda · Holistic Healing · Compassionate Care
-          </p>
-        </div>
-      </motion.div>
+          <img
+            className="hero__desk-img"
+            src="/img/clinic-desk-1200.webp"
+            srcSet={srcset('clinic-desk')}
+            sizes="100vw"
+            width={d.w}
+            height={d.h}
+            alt="The consulting desk at Adi Daiva Ayurveda Clinic, with certificates and shrine above"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </ShaderImage>
+      </div>
+      <div className="hero__fade" aria-hidden="true" />
+
+      <div className="hero__content">
+        <img className="hero__logo" src="/img/logo.png" alt="" width="512" height="512" />
+        <p className="hero__name">
+          <span>Adi Daiva</span>
+          <span>Ayurveda Clinic</span>
+        </p>
+        <p className="hero__values">Authentic Ayurveda · Holistic Healing · Compassionate Care</p>
+        <h1 id="hero-title" className="hero__title">
+          Awaken the Divine Source Within:
+          <span> Authentic Ayurvedic Healing in Mysuru.</span>
+        </h1>
+
+        {/* the reciprocity offer, on frosted glass */}
+        <aside className="glass" aria-label="Free diagnostic services">
+          <div className="glass__offers">
+            <div>
+              <span className="glass__free">Free</span>
+              <strong>Prakriti Assessment</strong>
+              <small>Know your body constitution</small>
+            </div>
+            <div>
+              <span className="glass__free">Free</span>
+              <strong>Nadi Pareeksha</strong>
+              <small>Classical pulse diagnosis</small>
+            </div>
+          </div>
+          <a
+            className="btn btn--gold"
+            href={whatsappWith('Hari Om, I would like to book my free Prakriti Assessment and Nadi Pareeksha with Dr. Rohit.')}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <WhatsAppIcon /> Reserve your free assessment
+          </a>
+        </aside>
+      </div>
     </section>
-  )
+  );
 }

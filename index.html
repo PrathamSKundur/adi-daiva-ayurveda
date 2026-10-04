@@ -1,15 +1,54 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Adi Daiva Ayurveda Clinic</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Adi Daiva Ayurveda Clinic · Dr. Rohit S. Patil · Mysuru</title>
+    <meta name="description" content="Ayurvedic consultation, Panchakarma, Swarna Bindu Prashana and clinical yoga with Dr. Rohit S. Patil (B.A.M.S., PGDYS) in Rajarajeshwari Nagar, Mysuru. Free Nadi Pareeksha and Prakriti assessment." />
+    <meta name="theme-color" content="#FDFBF7" />
+    <meta property="og:title" content="Adi Daiva Ayurveda Clinic, Mysuru" />
+    <meta property="og:description" content="Awaken the Divine source within. Ayurveda and yoga with Dr. Rohit S. Patil." />
+    <meta property="og:image" content="/img/consultation-1280.webp" />
+    <link rel="icon" type="image/png" href="/img/logo-96.png" />
+
+    <!-- landing images: the blurred room and Dr. Rohit's portrait -->
+    <link rel="preload" as="image" type="image/webp" href="/img/clinic-desk-700.webp" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" imagesrcset="/img/dr-rohit-desk-600.webp 600w, /img/dr-rohit-desk-900.webp 900w" imagesizes="(min-width: 1024px) 34vw, 70vw" fetchpriority="high" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MedicalClinic",
+        "name": "Adi Daiva Ayurveda Clinic",
+        "slogan": "Awaken the Divine source within!",
+        "medicalSpecialty": "Ayurveda",
+        "telephone": "+91-9380736394",
+        "image": "/img/consultation-1280.webp",
+        "logo": "/img/logo.png",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "796, 797 / H4, Narayana Bakery Road, Rajarajeshwari Nagar, BEML Layout",
+          "addressLocality": "Mysuru",
+          "addressRegion": "Karnataka",
+          "postalCode": "570026",
+          "addressCountry": "IN"
+        },
+        "employee": [
+          { "@type": "Physician", "name": "Dr. Rohit S. Patil", "description": "B.A.M.S., PGDYS. Clinical Yoga & Energy Healer" },
+          { "@type": "Physician", "name": "Dr. Sree Skanda", "description": "BAMS (Integrated). Online consultation, Mon–Sat 9 AM–9 PM", "telephone": "+91-9448553738" }
+        ]
+      }
+    </script>
   </head>
-  <body class="bg-white text-gray-900">
+  <body>
     <div id="root"></div>
+    <noscript>
+      <p style="padding:24px;font-family:Georgia,serif">Adi Daiva Ayurveda Clinic, Rajarajeshwari Nagar, Mysuru. Call +91 93807 36394.</p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
