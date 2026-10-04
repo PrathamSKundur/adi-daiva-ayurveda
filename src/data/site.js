@@ -16,8 +16,26 @@ export const WHATSAPP_URL =
 
 export const whatsappWith = (text) => `https://wa.me/91${CLINIC.phone}?text=${encodeURIComponent(text)}`;
 
-// Shown for information only (no contact details), as requested.
-export const DR_SKANDA = { name: 'Dr. Sree Skanda', degrees: 'BAMS (Integrated)' };
+// Clinic operating hours (IST). Day 0 = Sunday. Each entry is [open, close] as 'HH:MM'.
+export const HOURS = {
+  0: [['10:30', '13:00'], ['17:00', '20:00']],
+  1: [['09:30', '13:00'], ['17:00', '21:00']],
+  2: [['09:30', '13:00'], ['17:00', '21:00']],
+  3: [['09:30', '13:00'], ['17:00', '21:00']],
+  4: [['09:30', '13:00'], ['17:00', '21:00']],
+  5: [['09:30', '13:00'], ['17:00', '21:00']],
+  6: [['09:30', '13:00'], ['17:00', '21:00']],
+};
+
+export const DR_SKANDA = {
+  name: 'Dr. Sree Skanda',
+  degrees: 'BAMS (Integrated)',
+  phone: '9448553738',
+  phoneDisplay: '+91 94485 53738',
+  hours: '9:00 AM – 9:00 PM',
+  days: 'Monday to Saturday',
+  whatsapp: `https://wa.me/919448553738?text=${encodeURIComponent('Hari Om Dr. Skanda, I would like to book an online Ayurveda consultation.')}`,
+};
 
 export const NAV = [
   { id: 'elements', label: 'Five Elements' },

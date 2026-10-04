@@ -10,13 +10,12 @@ mkdirSync(OUT, { recursive: true });
 
 // crop: fractions trimmed from each edge (removes phone-camera watermarks)
 const IMAGES = {
-  consultation: { widths: [800, 1280, 1920], placeholder: true },
-  'dr-rohit-desk': { widths: [600, 900, 1300], placeholder: true },
-  homa: { widths: [480, 720], trimBlack: true, placeholder: true },
+  consultation: { widths: [1280] }, // social-share image only
+  homa: { widths: [480, 720], trimBlack: true },
   'kati-basti': { widths: [800, 1400], crop: { left: 0.055 } },
   'janu-basti': { widths: [700, 1200], crop: { bottom: 0.075 } },
   'swarna-prashana': { widths: [600, 1000] },
-  'clinic-desk': { widths: [700, 1200], crop: { bottom: 0.04 }, placeholder: true },
+  'clinic-desk': { widths: [700, 900, 1200], crop: { bottom: 0.04 }, placeholder: true },
   'dr-skanda': { widths: [240] },
   // round portrait for the intro, cut from the consultation photo
   'dr-rohit-portrait': { src: 'consultation', extract: { left: 2380, top: 540, width: 1060, height: 1060 }, widths: [320, 560] },
@@ -48,9 +47,6 @@ for (const [name, cfg] of Object.entries(IMAGES)) {
     const r = sharp(buf).resize({ width: w, withoutEnlargement: true });
     await r.clone().webp({ quality: 78 }).toFile(`${OUT}/${name}-${w}.webp`);
   }
-  // one jpeg for WebGL textures / very old browsers
-  const largest = cfg.widths[cfg.widths.length - 1];
-  await sharp(buf).resize({ width: largest, withoutEnlargement: true }).jpeg({ quality: 82, mozjpeg: true }).toFile(`${OUT}/${name}.jpg`);
   if (cfg.placeholder) {
     const tiny = await sharp(buf).resize({ width: 24 }).blur(1).webp({ quality: 40 }).toBuffer();
     placeholders[name] = `data:image/webp;base64,${tiny.toString('base64')}`;
@@ -68,7 +64,13 @@ for (let i = 0; i < data.length; i += 4) {
   data[i + 3] = Math.round(a * 255);
 }
 const logo = await sharp(data, { raw: info }).trim().png().toBuffer();
-await sharp(logo).resize(512).png({ compressionLevel: 9 }).toFile(`${OUT}/logo.png`);
+// on the page the emblem is an alpha mask painted with the CSS gold gradient (~15 KB instead of ~270 KB)
+{
+  const { data: m, info: mi } = await sharp(logo).resize(300).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  for (let i = 0; i < m.length; i += 4) m[i] = m[i + 1] = m[i + 2] = 0;
+  await sharp(m, { raw: mi }).webp({ quality: 100, alphaQuality: 70 }).toFile(`${OUT}/logo-mask.webp`);
+}
+await sharp(logo).resize(512).png({ compressionLevel: 9, palette: true }).toFile(`${OUT}/logo.png`); // schema / social only
 await sharp(logo).resize(96).png({ compressionLevel: 9 }).toFile(`${OUT}/logo-96.png`);
 
 writeFileSync('src/data/images.json', JSON.stringify({ placeholders, meta }, null, 2));

@@ -38,6 +38,7 @@ export default function Elders() {
   const [lens, setLens] = useState({ x: 0.3, y: 0.32 });
   const [moved, setMoved] = useState(false);
   const [size, setSize] = useState({ w: 1, h: 1, l: 150 });
+  const [near, setNear] = useState(false); // load the magnified photo only when the section is close
   useReveal(ref);
 
   useEffect(() => {
@@ -46,7 +47,9 @@ export default function Elders() {
       setSize({ w, h: e.contentRect.height, l: Math.round(Math.max(120, Math.min(170, w * 0.36))) });
     });
     ro.observe(frame.current);
-    return () => ro.disconnect();
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setNear(true); io.disconnect(); } }, { rootMargin: '600px 0px' });
+    io.observe(frame.current);
+    return () => { ro.disconnect(); io.disconnect(); };
   }, []);
 
   const found = NODES.find((n) => Math.hypot((n.x - lens.x) * 0.75, n.y - lens.y) < 0.065);
@@ -80,7 +83,7 @@ export default function Elders() {
 
         <div className="lens-panel" aria-live="polite" data-reveal>
           <p className="lens-panel__hint">
-            {finePointer ? 'Move the lens over the knees' : 'Drag the gold lens over the knees'}. Or choose a point:
+            Drag the gold lens over the knees, or choose a point:
           </p>
           <div className="lens-panel__chips">
             {NODES.map((n) => (
@@ -119,7 +122,7 @@ export default function Elders() {
               top: `${lens.y * 100}%`,
               width: l,
               height: l,
-              backgroundImage: `url(${largest('janu-basti')})`,
+              backgroundImage: near ? `url(${largest('janu-basti')})` : undefined,
               backgroundSize: `${w * ZOOM}px ${h * ZOOM}px`,
               backgroundPosition: `${l / 2 - lens.x * w * ZOOM}px ${l / 2 - lens.y * h * ZOOM}px`,
             }}

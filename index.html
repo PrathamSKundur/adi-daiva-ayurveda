@@ -11,13 +11,10 @@
     <meta property="og:image" content="/img/consultation-1280.webp" />
     <link rel="icon" type="image/png" href="/img/logo-96.png" />
 
-    <!-- landing images: the blurred room and Dr. Rohit's portrait -->
-    <link rel="preload" as="image" type="image/webp" href="/img/clinic-desk-700.webp" fetchpriority="high" />
-    <link rel="preload" as="image" type="image/webp" imagesrcset="/img/dr-rohit-desk-600.webp 600w, /img/dr-rohit-desk-900.webp 900w" imagesizes="(min-width: 1024px) 34vw, 70vw" fetchpriority="high" />
+    <!-- first screen: the clinic desk photo and the emblem -->
+    <link rel="preload" as="image" type="image/webp" imagesrcset="/img/clinic-desk-700.webp 700w, /img/clinic-desk-900.webp 900w, /img/clinic-desk-1200.webp 1200w" imagesizes="100vw" crossorigin="anonymous" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" href="/img/logo-mask.webp" crossorigin="anonymous" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet" />
 
     <script type="application/ld+json">
       {
@@ -37,6 +34,13 @@
           "postalCode": "570026",
           "addressCountry": "IN"
         },
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "09:30", "closes": "13:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "17:00", "closes": "21:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:30", "closes": "13:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "17:00", "closes": "20:00" }
+        ],
+        "alternateName": "ಆದಿ ದೈವ ಆಯುರ್ವೇದ ಚಿಕಿತ್ಸಾಲಯ",
         "employee": [
           { "@type": "Physician", "name": "Dr. Rohit S. Patil", "description": "B.A.M.S., PGDYS. Clinical Yoga & Energy Healer" },
           { "@type": "Physician", "name": "Dr. Sree Skanda", "description": "BAMS (Integrated). Online consultation, Mon–Sat 9 AM–9 PM", "telephone": "+91-9448553738" }

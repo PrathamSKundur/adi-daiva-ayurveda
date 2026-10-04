@@ -30,6 +30,7 @@ export default function Homa() {
         .to({}, { duration: 0.35 }) // stillness: nothing but fire
         .fromTo('.homa__deva', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2 })
         .fromTo('.homa__word', { opacity: 0, y: 30, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', stagger: 0.12, duration: 0.25 }, '>-0.05')
+        .fromTo('.homa__kn', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.15 }, '>0.02')
         .fromTo('.homa__gloss', { opacity: 0 }, { opacity: 1, duration: 0.2 }, '>0.05')
         .to({}, { duration: 0.15 });
 
@@ -42,7 +43,7 @@ export default function Homa() {
     <div ref={root} id="homa">
       <section ref={homa} className="homa" data-night aria-labelledby="homa-title">
         <ShaderImage
-          texture="/img/homa.jpg"
+          texture="/img/homa-720.webp"
           fragment={HOMA_FRAG}
           focus={[0.5, 0.42]}
           uniforms={{ uNight: NIGHT }}
@@ -58,6 +59,7 @@ export default function Homa() {
             height={d.h}
             loading="lazy"
             decoding="async"
+            crossOrigin="anonymous"
             alt="Dr. Rohit S. Patil seated behind the sacred Homa fire"
           />
         </ShaderImage>
@@ -74,6 +76,7 @@ export default function Homa() {
               </span>
             ))}
           </h2>
+          <p className="homa__kn" lang="kn">ನಿಮ್ಮೊಳಗಿನ ದೈವಿಕ ಮೂಲವನ್ನು ಜಾಗೃತಗೊಳಿಸಿ</p>
           <p className="homa__gloss">
             <em>Daiva Vyapashraya Chikitsa</em>, healing through the divine. Alongside medicine, the classical texts
             prescribe mantra, prayer and the sacred fire, so that the mind heals with the body.

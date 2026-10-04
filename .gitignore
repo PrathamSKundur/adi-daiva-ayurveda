@@ -6,3 +6,4 @@ dist/
 *.log
 .claude/
 screenshots/
+dist-ssr/
