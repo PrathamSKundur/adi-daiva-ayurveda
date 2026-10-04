@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import ShaderImage from '../gl/ShaderImage';
 import { OIL_FRAG } from '../gl/shaders';
-import Picture from '../lib/Picture';
+import Picture, { largest } from '../lib/Picture';
 import useReveal from '../lib/useReveal';
 import { whatsappWith, DISCLAIMER } from '../data/site';
 import { Label } from './ornaments';
@@ -84,13 +84,13 @@ export default function Panchakarma() {
               {sl.img ? (
                 front ? (
                   <ShaderImage
-                    texture={`/img/${sl.img}.jpg`}
+                    texture={largest(sl.img)}
                     fragment={OIL_FRAG}
                     focus={sl.focus}
                     uniforms={{ uOilA: sl.oilA, uOilB: sl.oilB, uOilR: sl.r }}
                     mouseEase={0.14}
                   >
-                    <Picture name={sl.img} alt={`${sl.name} being given by Dr. Rohit S. Patil`} sizes="(min-width: 900px) 46vw, 80vw" position={`${sl.focus[0] * 100}% ${(1 - sl.focus[1]) * 100}%`} />
+                    <Picture crossOrigin="anonymous" name={sl.img} alt={`${sl.name} being given by Dr. Rohit S. Patil`} sizes="(min-width: 900px) 46vw, 80vw" position={`${sl.focus[0] * 100}% ${(1 - sl.focus[1]) * 100}%`} />
                   </ShaderImage>
                 ) : (
                   <Picture name={sl.img} alt="" sizes="40vw" position={`${sl.focus[0] * 100}% ${(1 - sl.focus[1]) * 100}%`} />

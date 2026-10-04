@@ -19,11 +19,13 @@ const SHOTS = [
   ['07-elements-prithvi', '#elements', 4.95, 'pin'],
   ['08-homa', '.homa', 1.2, 'pin'],
   ['09-panchakarma', '.coverflow', -0.18, 'oil'],
-  ['10-swarna', '.marquee', -0.25, 'swarna'],
+  ['10-swarna', '.swarna__grid', -0.12],
+  ['10b-swarna-planner', '.planner', -0.1],
   ['11-geriatric', '#geriatric', 0.05, 'lens'],
   ['12-yoga', '.yoga__grid', -0.1, 'yoga'],
   ['13-conditions', '#conditions', 0.0],
   ['14-contact', '#contact', 0.0],
+  ['14b-online', '.online', -0.45],
   ['15-footer', 'footer', -0.4],
 ];
 
@@ -45,7 +47,8 @@ for (const width of WIDTHS) {
   await new Promise((r) => setTimeout(r, 2500));
   mkdirSync(`${OUT}/${width}`, { recursive: true });
 
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+  // compare with the device width: on mobile, innerWidth itself grows when content overflows
+  const overflow = await page.evaluate((w) => document.documentElement.scrollWidth - w, width);
   console.log(`${width}px  horizontal overflow: ${overflow}px`);
 
   for (const [name, sel, off, action] of SHOTS) {

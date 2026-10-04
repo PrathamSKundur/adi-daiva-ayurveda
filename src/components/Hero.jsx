@@ -6,6 +6,7 @@ import { DESK_FRAG } from '../gl/shaders';
 import { srcset, placeholder, dims } from '../lib/Picture';
 import { finePointer, reducedMotion } from '../lib/env';
 import { whatsappWith } from '../data/site';
+import Emblem from './Emblem';
 import { WhatsAppIcon } from './ornaments';
 
 const CREAM = [253 / 255, 251 / 255, 247 / 255];
@@ -42,7 +43,7 @@ export default function Hero() {
     <section id="top" ref={ref} className="hero" aria-labelledby="hero-title">
       <div className="hero__desk" style={{ backgroundImage: `url(${placeholder('clinic-desk')})` }}>
         <ShaderImage
-          texture="/img/clinic-desk-1200.webp"
+          texture={typeof window !== 'undefined' && window.innerWidth < 768 ? '/img/clinic-desk-900.webp' : '/img/clinic-desk-1200.webp'}
           fragment={DESK_FRAG}
           focus={[0.5, 0.48]}
           uniforms={{ uCream: CREAM }}
@@ -60,17 +61,19 @@ export default function Hero() {
             alt="The consulting desk at Adi Daiva Ayurveda Clinic, with certificates and shrine above"
             fetchpriority="high"
             decoding="async"
+            crossOrigin="anonymous"
           />
         </ShaderImage>
       </div>
       <div className="hero__fade" aria-hidden="true" />
 
       <div className="hero__content">
-        <img className="hero__logo" src="/img/logo.png" alt="" width="512" height="512" />
+        <Emblem className="hero__logo" />
         <p className="hero__name">
           <span>Adi Daiva</span>
           <span>Ayurveda Clinic</span>
         </p>
+        <p className="hero__kn" lang="kn">ಆದಿ ದೈವ ಆಯುರ್ವೇದ ಚಿಕಿತ್ಸಾಲಯ</p>
         <p className="hero__values">Authentic Ayurveda · Holistic Healing · Compassionate Care</p>
         <h1 id="hero-title" className="hero__title">
           Awaken the Divine Source Within:

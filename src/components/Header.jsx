@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CLINIC, NAV, WHATSAPP_URL } from '../data/site';
+import Emblem from './Emblem';
 import { PhoneIcon } from './ornaments';
 
 export default function Header() {
@@ -24,7 +25,7 @@ export default function Header() {
   return (
     <header className={`header ${dark ? 'header--night' : ''} ${solid ? 'header--solid' : ''} ${open ? 'header--open' : ''}`}>
       <a href="#top" className="header__brand" aria-label="Adi Daiva Ayurveda Clinic, back to top" onClick={() => setOpen(false)}>
-        <img src="/img/logo-96.png" alt="" width="38" height="38" />
+        <Emblem className="header__emblem" />
         <span>Adi Daiva <em>Ayurveda</em></span>
       </a>
       <nav className="header__nav" aria-label="Sections">

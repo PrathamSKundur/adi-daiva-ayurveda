@@ -148,7 +148,7 @@ export default function YogaDiet() {
               <span>{SYSTEMS[k].label}</span>
             </button>
           ))}
-          <p className="yoga__hint" aria-hidden="true">{finePointer ? 'Drag to turn' : 'Swipe to turn'}</p>
+          <p className="yoga__hint" aria-hidden="true">Drag to turn</p>
         </div>
 
         <div className="yoga__side">

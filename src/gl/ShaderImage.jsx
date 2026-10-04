@@ -60,10 +60,18 @@ export default function ShaderImage({
     if (lowPower) return undefined;
     let cleanup = () => {};
     let cancelled = false;
-    // three.js is fetched on demand so the landing photo never waits for it
-    import('three').then((THREE) => {
-      if (!cancelled) cleanup = start(THREE) || cleanup;
+    // three.js and the texture are fetched only once the page has finished loading
+    // and this image is near the viewport, so they never compete with the first paint
+    const afterLoad = new Promise((r) => (document.readyState === 'complete' ? r() : window.addEventListener('load', r, { once: true })))
+      .then(() => new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(r, { timeout: 1500 }) : setTimeout(r, 300))));
+    const nearView = new Promise((r) => {
+      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); r(); } }, { rootMargin: '500px 0px' });
+      io.observe(wrapRef.current);
+      cleanup = () => io.disconnect();
     });
+    Promise.all([afterLoad, nearView])
+      .then(() => import('three'))
+      .then((THREE) => { if (!cancelled) cleanup = start(THREE) || cleanup; });
     return () => { cancelled = true; cleanup(); };
 
     function start(THREE) {

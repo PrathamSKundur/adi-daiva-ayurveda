@@ -46,10 +46,11 @@ export default function Elements() {
   const section = useRef(null);
   const canvas = useRef(null);
   const [active, setActive] = useState(0);
-  const static_ = lowPower;
+  // the build renders the animated version; weak devices switch to the static list after mounting
+  const [static_, setStatic] = useState(false);
 
   useEffect(() => {
-    if (static_) return undefined;
+    if (lowPower) { setStatic(true); return undefined; }
     let scene;
     let cancelled = false;
     import('../gl/elementsScene.js').then(({ createElementsScene }) => {
@@ -80,7 +81,7 @@ export default function Elements() {
     }, section);
 
     return () => { cancelled = true; ctx.revert(); scene?.dispose(); };
-  }, [static_]);
+  }, []);
 
   return (
     <section id="elements" ref={section} className={`elements ${static_ ? 'elements--static' : ''}`} data-night aria-labelledby="el-title">
