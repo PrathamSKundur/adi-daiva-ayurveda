@@ -12,13 +12,14 @@ mkdirSync(OUT, { recursive: true });
 const IMAGES = {
   consultation: { widths: [1280] }, // social-share image only
   homa: { widths: [480, 720], trimBlack: true },
-  'kati-basti': { widths: [800, 1400], crop: { left: 0.055 } },
+  'greeva-basti': { widths: [800, 1400], crop: { left: 0.055 } },
+  'kati-basti': { widths: [800, 1400], crop: { bottom: 0.12 } }, // bottom crop removes the camera watermark
   'janu-basti': { widths: [700, 1200], crop: { bottom: 0.075 } },
   'swarna-prashana': { widths: [600, 1000] },
-  'clinic-desk': { widths: [700, 900, 1200], crop: { bottom: 0.04 }, placeholder: true },
+  'clinic-desk': { widths: [700, 900, 1200, 1500], crop: { bottom: 0.04 }, placeholder: true },
   'dr-skanda': { widths: [240] },
   // round portrait for the intro, cut from the consultation photo
-  'dr-rohit-portrait': { src: 'consultation', extract: { left: 2380, top: 540, width: 1060, height: 1060 }, widths: [320, 560] },
+  'dr-rohit-portrait': { src: 'consultation', extract: { left: 2000, top: 500, width: 1700, height: 1700 }, widths: [320, 560] },
 };
 
 async function base(name, cfg) {

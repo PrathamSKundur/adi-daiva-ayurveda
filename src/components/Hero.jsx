@@ -5,9 +5,15 @@ import ShaderImage from '../gl/ShaderImage';
 import { DESK_FRAG } from '../gl/shaders';
 import { srcset, placeholder, dims } from '../lib/Picture';
 import { finePointer, reducedMotion } from '../lib/env';
-import { whatsappWith } from '../data/site';
+import { WHATSAPP_URL } from '../data/site';
 import Emblem from './Emblem';
-import { WhatsAppIcon } from './ornaments';
+
+// right-sized photo for the screen: phones 900 px, laptops 1200 px, big or high-density desktops 1500 px
+const deskTexture = () => {
+  if (typeof window === 'undefined') return '/img/clinic-desk-1200.webp';
+  const w = window.innerWidth;
+  return w < 768 ? '/img/clinic-desk-900.webp' : w >= 1280 ? '/img/clinic-desk-1500.webp' : '/img/clinic-desk-1200.webp';
+};
 
 const CREAM = [253 / 255, 251 / 255, 247 / 255];
 
@@ -43,7 +49,7 @@ export default function Hero() {
     <section id="top" ref={ref} className="hero" aria-labelledby="hero-title">
       <div className="hero__desk" style={{ backgroundImage: `url(${placeholder('clinic-desk')})` }}>
         <ShaderImage
-          texture={typeof window !== 'undefined' && window.innerWidth < 768 ? '/img/clinic-desk-900.webp' : '/img/clinic-desk-1200.webp'}
+          texture={deskTexture()}
           fragment={DESK_FRAG}
           focus={[0.5, 0.48]}
           uniforms={{ uCream: CREAM }}
@@ -76,33 +82,12 @@ export default function Hero() {
         <p className="hero__kn" lang="kn">ಆದಿ ದೈವ ಆಯುರ್ವೇದ ಚಿಕಿತ್ಸಾಲಯ</p>
         <p className="hero__values">Authentic Ayurveda · Holistic Healing · Compassionate Care</p>
         <h1 id="hero-title" className="hero__title">
-          Awaken the Divine Source Within:
-          <span> Authentic Ayurvedic Healing in Mysuru.</span>
+          Awaken the Divine Source Within
         </h1>
-
-        {/* the reciprocity offer, on frosted glass */}
-        <aside className="glass" aria-label="Free diagnostic services">
-          <div className="glass__offers">
-            <div>
-              <span className="glass__free">Free</span>
-              <strong>Prakriti Assessment</strong>
-              <small>Know your body constitution</small>
-            </div>
-            <div>
-              <span className="glass__free">Free</span>
-              <strong>Nadi Pareeksha</strong>
-              <small>Classical pulse diagnosis</small>
-            </div>
-          </div>
-          <a
-            className="btn btn--gold"
-            href={whatsappWith('Hari Om, I would like to book my free Prakriti Assessment and Nadi Pareeksha with Dr. Rohit.')}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <WhatsAppIcon /> Reserve your free assessment
-          </a>
-        </aside>
+        <div className="hero__cta">
+          <a className="btn btn--gold" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Book Your Consultation</a>
+          <a className="btn btn--line" href="#panchakarma">Explore Classical Treatments</a>
+        </div>
       </div>
     </section>
   );

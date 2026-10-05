@@ -22,19 +22,27 @@ const smin = (a, b, k) => { const h = Math.max(k - Math.abs(a - b), 0) / k; retu
 
 function bodySDF(x, y, z) {
   const ax = Math.abs(x); // the body is symmetric
-  let d = ellipsoid(x, y, z, [0, 0.8, 0.005], [0.072, 0.095, 0.083]); // head
-  d = smin(d, limb(x, y, z, [0, 0.66, 0], [0, 0.74, 0.005], 0.036, 0.032), 0.04); // neck
-  let t = ellipsoid(x, y, z, [0, 0.49, 0], [0.155, 0.17, 0.085]); // ribcage
-  t = smin(t, ellipsoid(x, y, z, [0, 0.29, 0.004], [0.122, 0.13, 0.075]), 0.08); // abdomen
-  t = smin(t, ellipsoid(x, y, z, [0, 0.11, 0], [0.142, 0.1, 0.088]), 0.07); // pelvis
-  t = smin(t, ellipsoid(ax, y, z, [0.15, 0.6, 0], [0.062, 0.05, 0.052]), 0.06); // shoulders
+  // head: skull plus a tapered jaw, a little forward of the spine
+  let d = ellipsoid(x, y, z, [0, 0.81, 0.008], [0.082, 0.106, 0.093]);
+  d = smin(d, ellipsoid(x, y, z, [0, 0.752, 0.028], [0.058, 0.066, 0.066]), 0.035);
+  d = smin(d, limb(x, y, z, [0, 0.705, -0.004], [0, 0.63, -0.006], 0.04, 0.046), 0.04); // neck
+  // torso: chest, waist and hips with a real taper between them
+  let t = ellipsoid(x, y, z, [0, 0.485, 0], [0.158, 0.15, 0.088]); // ribcage
+  t = smin(t, ellipsoid(x, y, z, [0, 0.31, 0.002], [0.118, 0.12, 0.074]), 0.08); // waist
+  t = smin(t, ellipsoid(x, y, z, [0, 0.13, -0.004], [0.148, 0.105, 0.092]), 0.07); // hips
+  t = smin(t, ellipsoid(ax, y, z, [0.1, 0.645, -0.006], [0.095, 0.038, 0.06]), 0.06); // trapezius slope
+  t = smin(t, ellipsoid(ax, y, z, [0.2, 0.595, 0], [0.05, 0.056, 0.052]), 0.05); // shoulder
   d = smin(d, t, 0.05);
-  let l = limb(ax, y, z, [0.175, 0.6, 0], [0.215, 0.36, 0], 0.043, 0.034); // upper arm
-  l = smin(l, limb(ax, y, z, [0.215, 0.36, 0], [0.25, 0.12, 0.02], 0.033, 0.025), 0.02); // forearm
-  l = smin(l, ellipsoid(ax, y, z, [0.262, 0.06, 0.025], [0.024, 0.048, 0.014]), 0.02); // hand
-  l = smin(l, limb(ax, y, z, [0.075, 0.08, 0], [0.085, -0.4, 0.005], 0.072, 0.046), 0.03); // thigh
-  l = smin(l, limb(ax, y, z, [0.085, -0.4, 0.005], [0.09, -0.83, -0.01], 0.044, 0.03), 0.02); // shin
-  l = smin(l, limb(ax, y, z, [0.09, -0.86, -0.01], [0.1, -0.885, 0.075], 0.027, 0.022), 0.02); // foot
+  // arms hang slightly clear of the body
+  let l = limb(ax, y, z, [0.205, 0.595, 0], [0.24, 0.37, 0.004], 0.043, 0.034); // upper arm
+  l = smin(l, limb(ax, y, z, [0.24, 0.37, 0.004], [0.275, 0.13, 0.022], 0.034, 0.024), 0.025); // forearm
+  l = smin(l, ellipsoid(ax, y, z, [0.288, 0.065, 0.026], [0.02, 0.05, 0.015]), 0.02); // hand
+  // legs: full thigh, defined knee, calf bulge, narrow ankle
+  l = smin(l, limb(ax, y, z, [0.088, 0.07, 0], [0.092, -0.4, 0.006], 0.071, 0.045), 0.03); // thigh
+  l = smin(l, ellipsoid(ax, y, z, [0.092, -0.405, 0.012], [0.046, 0.05, 0.05]), 0.03); // knee
+  l = smin(l, limb(ax, y, z, [0.092, -0.42, 0.004], [0.086, -0.84, -0.01], 0.043, 0.026), 0.025); // shin
+  l = smin(l, ellipsoid(ax, y, z, [0.092, -0.56, -0.016], [0.042, 0.1, 0.048]), 0.04); // calf
+  l = smin(l, limb(ax, y, z, [0.086, -0.865, -0.012], [0.094, -0.895, 0.08], 0.028, 0.022), 0.02); // foot
   return smin(d, l, 0.035);
 }
 

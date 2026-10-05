@@ -38,9 +38,9 @@ export const DR_SKANDA = {
 };
 
 export const NAV = [
-  { id: 'elements', label: 'Five Elements' },
   { id: 'panchakarma', label: 'Panchakarma' },
   { id: 'swarna', label: 'Swarna Prashana' },
+  { id: 'elements', label: 'Five Elements' },
   { id: 'geriatric', label: 'Geriatric Care' },
   { id: 'yoga', label: 'Yoga & Diet' },
   { id: 'contact', label: 'Contact' },

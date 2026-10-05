@@ -6,6 +6,7 @@ import { finePointer, reducedMotion } from './lib/env';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Intro from './components/Intro';
+import Offer from './components/Offer';
 import Elements from './components/Elements';
 import Homa from './components/Homa';
 import Panchakarma from './components/Panchakarma';
@@ -60,10 +61,11 @@ export default function App() {
       <main id="main">
         <Hero />
         <Intro />
-        <Elements />
-        <Homa />
         <Panchakarma />
         <Swarna />
+        <Offer />
+        <Elements />
+        <Homa />
         <Elders />
         <YogaDiet />
         <Manuscript />

@@ -3,10 +3,11 @@ import images from '../data/images.json';
 const WIDTHS = {
   consultation: [1280],
   homa: [480, 720],
+  'greeva-basti': [800, 1400],
   'kati-basti': [800, 1400],
   'janu-basti': [700, 1200],
   'swarna-prashana': [600, 1000],
-  'clinic-desk': [700, 900, 1200],
+  'clinic-desk': [700, 900, 1200, 1500],
   'dr-skanda': [240],
   'dr-rohit-portrait': [320, 560],
 };

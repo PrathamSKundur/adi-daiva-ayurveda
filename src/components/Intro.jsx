@@ -16,12 +16,15 @@ export default function Intro() {
         <h2 id="intro-title">Dr. Rohit S. Patil</h2>
         <p className="intro__deg">B.A.M.S., PGDYS · Consultant Physician &amp; Clinical Yoga Specialist</p>
         <p>
-          Under the guidance of Dr. Rohit S. Patil, Adi Daiva Ayurveda brings together classical Ayurvedic wisdom and
-          careful, targeted treatment.
+          Under the expert guidance of Dr. Rohit S. Patil, ADI DAIVA AYURVEDA brings together classical Ayurvedic
+          wisdom and careful, targeted treatment. Deeply rooted in authentic Samhita literature, Dravyaguna
+          pharmacology, and precise Bhaishajya Kalpana formulations, Dr. Patil’s approach bridges ancient principles
+          with modern clinical rigor.
         </p>
         <p>
-          We offer personalised care that looks for the root cause of illness and works to restore your body’s
-          natural balance, through consultation, Panchakarma, diet and clinical yoga.
+          We offer personalized care that looks for the root cause of illness and works to restore your body’s
+          natural balance through comprehensive consultation, classical Panchakarma procedures, tailored diet plans,
+          and clinical yoga.
         </p>
         <div className="intro__actions">
           <a className="btn btn--gold" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Book Your Consultation</a>

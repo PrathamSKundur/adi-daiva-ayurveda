@@ -62,10 +62,7 @@ export default function Contact() {
             <h3 id="online-title">{DR_SKANDA.name}</h3>
             <p className="online__deg">{DR_SKANDA.degrees}</p>
             <p className="online__hours"><strong>{DR_SKANDA.days}</strong> · {DR_SKANDA.hours}</p>
-          </div>
-          <div className="online__actions">
-            <a className="btn btn--line" href={`tel:+91${DR_SKANDA.phone}`}><PhoneIcon /> {DR_SKANDA.phoneDisplay}</a>
-            <a className="btn btn--line" href={DR_SKANDA.whatsapp} target="_blank" rel="noopener noreferrer"><WhatsAppIcon /> WhatsApp</a>
+            <p className="online__phone">{DR_SKANDA.phoneDisplay}</p>
           </div>
         </aside>
       </section>
@@ -87,7 +84,7 @@ export default function Contact() {
             <strong>Online consultation</strong>
             {DR_SKANDA.name}, {DR_SKANDA.degrees}
             <br />
-            {DR_SKANDA.days}, {DR_SKANDA.hours} · <a href={`tel:+91${DR_SKANDA.phone}`}>{DR_SKANDA.phoneDisplay}</a>
+            {DR_SKANDA.days}, {DR_SKANDA.hours} · {DR_SKANDA.phoneDisplay}
           </p>
         </div>
         <p className="footer__fine">
