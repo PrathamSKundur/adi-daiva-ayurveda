@@ -7,25 +7,25 @@ import { Label } from './ornaments';
 // pos: on the front surface of the figure (body space)
 const SYSTEMS = {
   mind: {
-    label: 'Mind', term: 'Manas', pos: [0, 0.8, 0.095],
+    label: 'Mind', term: 'Manas', pos: [0, 0.8, 0.1],
     concern: 'stress, worry and poor sleep',
     diet: [['On waking', 'Warm water, five soaked almonds'], ['Meals', 'Fresh, simple, home-cooked; at fixed times'], ['Evening', 'A light dinner before 8 pm'], ['Bedtime', 'Warm milk with a pinch of nutmeg'], ['Go easy on', 'Late screens, too much tea or coffee']],
     asana: 'Viparita Karani', how: 'Legs up the wall, five to ten minutes.', breath: 'Bhramari · Yoga Nidra',
   },
   lungs: {
-    label: 'Lungs', term: 'Prana', pos: [0.07, 0.5, 0.09],
+    label: 'Lungs', term: 'Prana', pos: [0.07, 0.5, 0.095],
     concern: 'allergies, sinus trouble and frequent colds',
     diet: [['On waking', 'Warm water with tulsi and ginger'], ['Meals', 'Moong soup, millet khichdi, warming spices'], ['Evening', 'Turmeric milk, an early dinner'], ['Go easy on', 'Cold drinks; curd and bananas at night'], ['Habit', 'Steam inhalation with ajwain']],
     asana: 'Bhujangasana', how: 'Cobra pose, slowly, to open the chest.', breath: 'Anulom Vilom · Bhramari',
   },
   gut: {
-    label: 'Gut', term: 'Agni', pos: [0, 0.28, 0.085],
+    label: 'Gut', term: 'Agni', pos: [0, 0.3, 0.082],
     concern: 'acidity, bloating and sluggish digestion',
     diet: [['On waking', 'Warm water boiled with cumin, coriander and fennel'], ['Midday', 'Your main meal, when Agni is strongest'], ['After lunch', 'Thin buttermilk with roasted cumin'], ['Evening', 'A light, warm dinner by 7:30 pm'], ['Go easy on', 'Raw salads at night, iced drinks']],
     asana: 'Vajrasana', how: 'Sit on your heels for five minutes after each meal.', breath: 'Agnisara · Pavanamuktasana',
   },
   joints: {
-    label: 'Joints', term: 'Sandhi', pos: [0.085, -0.4, 0.05],
+    label: 'Joints', term: 'Sandhi', pos: [0.092, -0.4, 0.058],
     concern: 'knee and back pain, morning stiffness',
     diet: [['On waking', 'Warm water and a gentle fifteen-minute walk'], ['Meals', 'Warm, cooked food with a spoon of ghee'], ['Add', 'Sesame, dry ginger, fenugreek, garlic'], ['Habit', 'Warm sesame-oil massage before the bath'], ['Go easy on', 'Cold, dry and stale food; long fasts']],
     asana: 'Setu Bandhasana', how: 'Bridge pose, supported, within comfort.', breath: 'Joint-freeing series · Nadi Shodhana',

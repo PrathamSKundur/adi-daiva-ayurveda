@@ -7,7 +7,7 @@
 | `consultation.jpg` (landscape) | Dr. Rohit in a white coat, smiling across his desk at a patient. Warm daylight, human, reassuring. | *Being Seen*, beside his own words, at every width. |
 | `dr-rohit-desk.jpg` (portrait) | Dr. Rohit writing a prescription. Quiet, attentive. | **Landing portrait**, in a temple-arch frame, where the title sequence plays. |
 | `homa.jpg` (2 versions supplied) | Dr. Rohit in a maroon shawl behind a tall Homa flame in a brick kunda. Sacred, intense. | **Chapter 2 only.** The sharper of the two is used; the softer, lower-resolution duplicate is not used. |
-| `kati-basti.jpg` | Dr. Rohit pouring warm oil into a dough ring on a patient's lower back. | Panchakarma oil-ripple scene (Kati Basti). Camera watermark cropped out. |
+| `greeva-basti.jpg` | Dr. Rohit pouring warm oil into a dough ring on a patient's neck. | Panchakarma oil-ripple scene (Greeva Basti). Camera watermark cropped out. |
 | `janu-basti.jpg` | Dr. Rohit filling oil reservoirs over both knees of an older woman. | Panchakarma (Janu Basti) **and** the Elders lens scene, because it is the only image of care for an older patient. Watermark cropped. |
 | `swarna-prashana.jpg` | Dr. Rohit giving drops to a toddler while her mother watches. Tender. | Swarna Bindu Prashana. It is the only pediatric photo, so it is shown in two crops among text "leaves", not faked into a gallery. |
 | `clinic-desk.jpg` | The empty consulting desk; registration certificates, Ganesha and Dhanvantari frames, medicine shelf. | **Landing background, blurred and faded** (the room as a memory). It returns **sharp** in the *Trust* section, where the certificates become readable. Watermark cropped. |

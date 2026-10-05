@@ -95,17 +95,19 @@ const VERT = /* glsl */ `
   uniform vec3 uC0; uniform vec3 uC1; uniform vec3 uC2; uniform vec3 uC3; uniform vec3 uC4;
   varying vec3 vCol; varying float vA;
 
-  vec3 P(int i) { if (i == 0) return aP0; if (i == 1) return aP1; if (i == 2) return aP2; if (i == 3) return aP3; return aP4; }
-  vec3 C(int i) { if (i == 0) return uC0; if (i == 1) return uC1; if (i == 2) return uC2; if (i == 3) return uC3; return uC4; }
+  // branch-free selection by a whole-number index: if-chains over attributes mis-compile on Apple's Metal GL backend
+  float sel(float i, float k) { return 1.0 - min(1.0, abs(i - k)); }
+  vec3 P(float i) { return aP0 * sel(i, 0.0) + aP1 * sel(i, 1.0) + aP2 * sel(i, 2.0) + aP3 * sel(i, 3.0) + aP4 * sel(i, 4.0); }
+  vec3 C(float i) { return uC0 * sel(i, 0.0) + uC1 * sel(i, 1.0) + uC2 * sel(i, 2.0) + uC3 * sel(i, 3.0) + uC4 * sel(i, 4.0); }
   float w(float k) { return clamp(1.0 - abs(uProg - k), 0.0, 1.0); }
 
   void main() {
     float pr = clamp(uProg, 0.0, 4.0);
-    int i = int(min(floor(pr), 3.0));
-    float f = pr - float(i);
+    float i = min(floor(pr), 3.0);
+    float f = pr - i;
     // every particle leaves at its own moment, so the form dissolves rather than slides
     float t = smoothstep(0.0, 1.0, clamp((f - aRand * 0.35) / 0.65, 0.0, 1.0));
-    vec3 p = mix(P(i), P(i + 1), t);
+    vec3 p = mix(P(i), P(i + 1.0), t);
 
     // between forms the particles scatter like released breath
     float burst = sin(t * 3.14159);
@@ -124,7 +126,7 @@ const VERT = /* glsl */ `
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mv;
     gl_PointSize = uPix * (0.55 + aRand * 1.1) * (5.0 / -mv.z);
-    vCol = mix(C(i), C(i + 1), t);
+    vCol = mix(C(i), C(i + 1.0), t);
     vA = 0.45 + 0.55 * aRand;
   }
 `;
