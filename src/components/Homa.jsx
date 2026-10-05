@@ -78,8 +78,8 @@ export default function Homa() {
           </h2>
           <p className="homa__kn" lang="kn">ನಿಮ್ಮೊಳಗಿನ ದೈವಿಕ ಮೂಲವನ್ನು ಜಾಗೃತಗೊಳಿಸಿ</p>
           <p className="homa__gloss">
-            <em>Daiva Vyapashraya Chikitsa</em>, healing through the divine. Alongside medicine, the classical texts
-            prescribe mantra, prayer and the sacred fire, so that the mind heals with the body.
+            Healing through the divine. Alongside medicine, the classical texts prescribe mantra, prayer and the sacred
+            fire, so that the mind heals with the body.
           </p>
         </div>
       </section>
