@@ -18,8 +18,28 @@ import Contact from './components/Contact';
 import FloatingCTA from './components/FloatingCTA';
 
 gsap.registerPlugin(ScrollTrigger);
+// the phone's address bar growing and shrinking is not a real resize: don't re-measure the pinned scenes for it
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 export default function App() {
+  // Lazy images and fonts change the page height after the pinned scenes (elements, Homa) were measured,
+  // which leaves their pin points stale. Re-measure whenever the content height settles on a new value.
+  useEffect(() => {
+    const main = document.getElementById('main');
+    if (!main || typeof ResizeObserver === 'undefined') return undefined;
+    let last = main.offsetHeight;
+    let timer;
+    const ro = new ResizeObserver(() => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const h = main.offsetHeight;
+        if (Math.abs(h - last) > 2) { last = h; ScrollTrigger.refresh(); }
+      }, 250);
+    });
+    ro.observe(main);
+    return () => { clearTimeout(timer); ro.disconnect(); };
+  }, []);
+
   // Prithvi: grounded, slightly heavy scrolling (Lenis) with a mouse/trackpad. Touch keeps native momentum.
   useEffect(() => {
     if (reducedMotion || !finePointer) return undefined;
